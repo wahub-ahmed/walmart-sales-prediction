@@ -88,3 +88,25 @@ arima.plot(legend=True, label = "Baseline")
 plt.title('ARIMA Prediction of Walmart Sales')
 plt.ylabel('Weekly Sales')
 plt.show()
+
+rmse = []
+mae = []
+
+rmse.append(sklearn.metrics.mean_squared_error(test, baseline, squared = False))
+rmse.append(sklearn.metrics.mean_squared_error(test, tree, squared = False))
+rmse.append(sklearn.metrics.mean_squared_error(test, arima, squared = False))
+
+mae.append(sklearn.metrics.mean_absolute_error(test, baseline))
+mae.append(sklearn.metrics.mean_absolute_error(test, tree))
+mae.append(sklearn.metrics.mean_absolute_error(test, arima))
+
+d = {'Model': ['Baseline', 'Decision_Tree', 'ARIMA'], 'RMSE': rmse, 'MAE': mae}
+df = pd.DataFrame(data=d)
+
+df.plot.bar(x = 'Model', y = ['RMSE', 'MAE'], rot = 40)
+plt.title("Accuracy Metrics")
+plt.tight_layout()
+plt.show()
+
+print(rmse)
+print(mae)
